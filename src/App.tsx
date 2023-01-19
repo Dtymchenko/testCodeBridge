@@ -1,25 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import './App.scss';
+import {Box} from '@material-ui/core'
+import Main from './pages/Main'
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box className='wrapper'>
+      <Routes>
+        <Route index element={<Main/>} />
+        {/* <Route
+          index
+          element={
+            isLoading ? (
+              tempArr.map((item, i) => <Loader key={i} />)
+            ) : (
+              <JobBoard
+                items={items}
+                currentItems={currentItems}
+                getTimePassed={getTimePassed}
+                today={today}
+                itemsPerPage={itemsPerPage}
+                setCurrentItems={setCurrentItems}
+                setItemId={setItemId}
+              />
+            )
+          }
+        /> */}
+        {/* <Route
+          path="/detail"
+          element={
+            <JobDetail
+              getTimePassed={getTimePassed}
+              today={today}
+              items={items}
+              itemId={itemId}
+            />
+          }
+        /> */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Box>
   );
 }
 
