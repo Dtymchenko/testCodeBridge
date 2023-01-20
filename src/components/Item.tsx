@@ -4,10 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Box} from '@material-ui/core/';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { IItem } from './interface';
 
 const useStyles = makeStyles({
   root: {
     maxWidth: '100%',
+    height: '100%',
   },
   media: {
     height: 217,
@@ -28,7 +30,11 @@ const useStyles = makeStyles({
   },
 });
 
-function Item() {
+interface ItemProps {
+  item: IItem
+}
+
+function Item({item}: ItemProps) {
   const classes = useStyles();
 
   return (
@@ -36,19 +42,27 @@ function Item() {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/assets/bg.png"
+          image={item.imageUrl}
           title="Contemplative Reptile"
         />
         <CardContent>
-            <Typography className={styles.header}>
+            <Typography className={styles.date}>
+                <>
                 {<CalendarTodayOutlinedIcon/>}
-                June 29th, 2021
+                {new Date(item.publishedAt).toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"})}
+                {/* I hope, that date could be shown like this, the only difference with figma is that there is no ordinal suffix for the day of the month, 2 characters. Anyway if it is crucial, we can make it with function below:
+                function ordinal(n) {
+                let s = ["th", "st", "nd", "rd"];
+                let v = n % 100;
+                return n + (s[(v - 20) % 10] || s[v] || s[0]);
+} */}
+                </>
               </Typography>
             <Typography gutterBottom variant="h5" component="h2" className={classes.headline}>
-                The 2020 World's Most Valuable Brands
+                {item.title}
             </Typography>
             <Typography variant="body2" className={classes.decription} component="p">
-                Non sed molestie tortor massa vitae in mattis. Eget vel consequat hendrerit commodo libero aliquam. Urna arcu nunc tortor vitae pharetra...
+                {item.summary.slice(0, 100) + '...'}
           </Typography>
         </CardContent>
       </CardActionArea>

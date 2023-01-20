@@ -1,6 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IItem } from "../../interface";
 
-const initialState = {
+export interface initialState {
+  items: IItem[],
+  searchValue: string,
+  isLoading: boolean,
+}
+
+const initialState:initialState = {
   items: [],
   searchValue: "",
   isLoading: true,

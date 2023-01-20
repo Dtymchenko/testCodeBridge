@@ -6,7 +6,8 @@ import {Box} from '@material-ui/core'
 import Main from './pages/Main'
 import NotFound from './pages/NotFound';
 import {IItem} from './components/interface'
-import { useSelector, useDispatch } from "react-redux";
+import { RootState } from './components/redux/store';
+import { useDispatch, useSelector } from "react-redux";
 import {
   setItems,
   setIsLoadingFalse,
@@ -16,25 +17,23 @@ import {
 
 function App() {
 
-  const [items, setItems] = React.useState<IItem[]>([])
-  const [loading, setLoading] = React.useState(true)
+  const dispatch = useDispatch()
+  const loading = useSelector((state:RootState) => state.main.isLoading)
 
 React.useEffect(() => {
   const getData = async () => {
     try {
       const response = await axios.get<IItem[]>('https://api.spaceflightnewsapi.net/v3/articles')
-      setItems(response.data)
+      dispatch(setItems(response.data))
     }   catch (error:any) {
       alert(error.message)
       console.log(error.message)
   }    finally {
-    setLoading(false)
+    dispatch(setIsLoadingFalse())
     }
   }
   getData();
-}, [])
-
-console.log(items)
+}, [loading])
 
   return (
     <Box className='wrapper'>

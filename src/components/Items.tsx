@@ -3,6 +3,8 @@ import React from 'react'
 import Item from './Item'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { RootState } from './redux/store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,25 +15,21 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
+  
 
 function Items() {
+
+    const items = useSelector((state:RootState) => state.main.items);
     const classes = useStyles();
+    
     return (
     <div className={classes.root}>
       <Grid container spacing={3}> 
-        <Grid item xs={4}>
-            <Item/>
+      {items.map((item) => (
+        <Grid key={item.id} item xs={4}>
+          <Item item={item}/>
         </Grid>
-        <Grid item xs={4}>
-            <Item/>
-        </Grid>
-        <Grid item xs={4}>
-            <Item/>
-        </Grid>
-        <Grid item xs={4}>
-            <Item/>
-        </Grid>
+      ))}
       </Grid>
     </div>
         // <>
