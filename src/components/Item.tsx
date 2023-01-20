@@ -1,13 +1,9 @@
 import React from 'react';
 import styles from './Item.module.scss'
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography, Box} from '@material-ui/core/';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const useStyles = makeStyles({
   root: {
@@ -15,6 +11,20 @@ const useStyles = makeStyles({
   },
   media: {
     height: 217,
+  },
+  headline: {
+    color: '#363636',
+  },
+  decription: {
+    fontSize: '16px',
+    lineHeight: '150%',
+    color: '#363636',
+  },
+  footer: {
+    fontWeight: 700,
+    fontSize: '16px',
+    lineHeight: '150%',
+    color: '#363636'
   },
 });
 
@@ -30,19 +40,21 @@ function Item() {
           title="Contemplative Reptile"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Lizard
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            <Typography className={styles.header}>
+                {<CalendarTodayOutlinedIcon/>}
+                June 29th, 2021
+              </Typography>
+            <Typography gutterBottom variant="h5" component="h2" className={classes.headline}>
+                The 2020 World's Most Valuable Brands
+            </Typography>
+            <Typography variant="body2" className={classes.decription} component="p">
+                Non sed molestie tortor massa vitae in mattis. Eget vel consequat hendrerit commodo libero aliquam. Urna arcu nunc tortor vitae pharetra...
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Read More
-        </Button>
+      <CardActions disableSpacing={true}>
+        <Button className={classes.footer}>Read more</Button>
+        <Button className={styles.btn}><ArrowForwardIcon/></Button>
       </CardActions>
     </Card>
   );
