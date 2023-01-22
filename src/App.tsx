@@ -12,6 +12,7 @@ import {
   setItems,
   setIsLoadingFalse,
 } from "./components/redux/slices/mainSlice";
+import Detail from './pages/Detail';
 
 
 
@@ -41,18 +42,12 @@ React.useEffect(() => {
         <Route index element={
         loading? <div className='loader'>Loading...</div> : <Main/>
         } />
-        
-        {/* <Route
+        <Route
           path="/detail"
           element={
-            <JobDetail
-              getTimePassed={getTimePassed}
-              today={today}
-              items={items}
-              itemId={itemId}
-            />
+            <Detail/>
           }
-        /> */}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>

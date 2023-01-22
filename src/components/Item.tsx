@@ -5,23 +5,34 @@ import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typog
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { IItem } from './interface';
+import { bottomNavigationActionClasses } from '@mui/material';
 
 const useStyles = makeStyles({
   root: {
     maxWidth: '100%',
     height: '100%',
   },
+  content: {
+    height: '90%',
+  },
+  text_content: {
+    height: '54%',
+  },
   media: {
     height: 217,
   },
   headline: {
+    height: '44%',
+    minHeight: '100px',
     color: '#363636',
   },
   decription: {
+    height: '32%',
     fontSize: '16px',
     lineHeight: '150%',
     color: '#363636',
   },
+  
   footer: {
     fontWeight: 700,
     fontSize: '16px',
@@ -39,13 +50,13 @@ function Item({item}: ItemProps) {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea className={classes.content}>
         <CardMedia
           className={classes.media}
           image={item.imageUrl}
           title="Contemplative Reptile"
         />
-        <CardContent>
+        <CardContent className={classes.text_content} >
             <Typography className={styles.date}>
                 <>
                 {<CalendarTodayOutlinedIcon/>}

@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 function Search() {
   const classes = useStyles()
   return (
-    <>
+    <div className={styles.wrapper}>
         <Typography className={classes.text} component="h4">Filter by keywords</Typography>
         <TextField
         className={styles.input}
@@ -32,7 +32,7 @@ function Search() {
       />
       <Box className={styles.results}>Results: 6</Box>
       <Divider className={styles.divider} />
-    </>
+    </div>
     
   )
 }

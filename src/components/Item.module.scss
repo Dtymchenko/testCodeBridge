@@ -8,7 +8,7 @@
     opacity: 0.6;
 }
 .btn {
-    min-width: 1px !important;
+    min-width: 1px !important; // I know that it is not goog idea to use important, but I tried everything and with out it - does not work!
     position: relative;
     span {
         position: absolute;
