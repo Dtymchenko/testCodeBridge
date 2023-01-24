@@ -3,27 +3,25 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
-// interface ArticleProps {
-//     item: any
-// }
 
-function Article()
-    // {item}: ArticleProps
-    {
+function Article() {
 const items = useSelector((state:RootState) => state.main.items)
 const itemId = useSelector((state:RootState) => state.main.itemId)
 const item = items.filter(obj => obj.id === itemId)[0]
-console.log(item)
+
     return (
-            <div className={styles.wrapper}>
-            <article  className={styles.article}>
+            <div className={styles.wrapper}
+            style={{ background: `url(${item.imageUrl})`,
+            backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover', padding: '150px 75px 0px' }}
+            >
+            <article className={styles.article}>
                 <h1>
                 {item.title}
                 </h1>
                 <div className={styles.text}>
-                    {item.summary}
+                    <p>{item.summary}</p>
                     {/* Below you can see more text to check CSS, if you want
-                    {items.map(el => item.summary)} */}
+                    {items.map(el => (<p>{item.summary}</p>))} */}
                 </div>
             </article>
             <Link to={'/'}>

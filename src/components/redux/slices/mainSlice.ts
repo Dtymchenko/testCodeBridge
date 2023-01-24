@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IItem } from "../../interface";
 
-export interface initialState {
+export interface initialStateInterface {
   items: IItem[],
   filteredItems: IItem[],
   searchValue: string,
@@ -9,7 +9,7 @@ export interface initialState {
   itemId: number
 }
 
-const initialState:initialState = {
+const initialState:initialStateInterface = {
   items: [],
   filteredItems: [],
   searchValue: "",

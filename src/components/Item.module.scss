@@ -7,6 +7,7 @@
     color: #363636;
     opacity: 0.6;
 }
+
 .btn {
     min-width: 1px !important; // I know that it is not goog idea to use important, but I tried everything and with out it - does not work!
     position: relative;
@@ -20,6 +21,9 @@
     }
 }
 
-// .yellow {
-//     background-color: yellow;
+// @media (min-width: 360px) and (max-width: 766px) {
+//     .headline {
+//         font-size: 20px !important;
+//     }
 // }
+

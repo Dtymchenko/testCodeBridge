@@ -5,7 +5,7 @@ import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typog
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { IItem } from './interface';
-import { bottomNavigationActionClasses } from '@mui/material';
+import reactStringReplace from 'react-string-replace';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { setItemId } from './redux/slices/mainSlice';
@@ -18,18 +18,22 @@ const useStyles = makeStyles({
   },
   content: {
     height: '90%',
+    marginTop: '-21px',
   },
   text_content: {
     height: '54%',
   },
   media: {
-    height: 217,
+    width: '100%',
+    height: '217px',
   },
   headline: {
     height: '44%',
     minHeight: '100px',
+    marginBottom: '15px',
     color: '#363636',
-    overflow: 'hidden',
+    overflowY: 'hidden',
+    //can be also scroll, for example, depending on task
   },
   description: {
     height: '32%',
@@ -55,44 +59,24 @@ function Item({item}: ItemProps) {
   const summarySliced = item.summary.slice(0, 100)
   const classes = useStyles();
 
-  // const light = React.useCallback((filter: string, str:string) => {
-  //   const parts = str.split(new RegExp(`(${filter})`, "gi"));
-  //   return parts.map((part, index) => (
-  //     <React.Fragment key={index}>
-  //     {part.toLowerCase() === filter.toLowerCase() ? (
-  //       <span style={{ backgroundColor: "yellow" }}>{part}</span>
-  //     ) : (
-  //       part
-  //     )}
-  //   </React.Fragment>
-  //   ))
-  // },[searchValue])
+  const light = React.useCallback((filter: string, str:string): string | React.ReactNodeArray => {
+    if (filter.trim()) {
+      const arr = filter?.split(' ');
 
-  const light = React.useCallback((filter: string, str:string) => {
-    const arr = filter?.split(' ')
-    console.log('STARTED arr', arr)
-    arr?.forEach(el => {
-      console.log('el', el)
-      console.log('str', str)
-      console.log(str.toUpperCase().includes(el.toUpperCase()))
-      if (str.toUpperCase().includes(el.toUpperCase())) {
-        const parts = str.split(new RegExp(`(${el})`, "gi"));
-        console.log('parts', parts)
-      return parts.map((part, index) => (
-      <React.Fragment key={index}>
-      {part.toUpperCase() === el.toUpperCase() ? (
-        <span style={{ backgroundColor: "yellow" }}>{part}</span>
-      ) : (
-        part
-      )}
-    </React.Fragment>
-    ))
-      } return str
-    }) 
-    // return str
-  },[searchValue])
+      return arr?.reduce((acc: any, el) => {
+        acc = reactStringReplace(acc, new RegExp(`(${el})`, 'gi'), (match: string, index: number, offset: number) => {
+            if (match) {
+              return <span key={`${match}-${index}-${offset}`} style={{ backgroundColor: "yellow" }}>{match}</span>
+            }
+        });
+        return acc;
+      }, str);
+    }
+    return str;
+  },[]);
 
-  // console.log(light('nasa said hello', 'nasa llorem ipsum maybe said'))
+
+  
 
   const onClickLink = () => {
     dispatch(setItemId(item.id))
@@ -120,13 +104,11 @@ function Item({item}: ItemProps) {
 } */}
                 </>
               </Typography>
-            <Typography gutterBottom variant="h5" component="h2" className={classes.headline}>
+            <Typography gutterBottom variant="h5" component="h2" className={`${classes.headline} ${styles.headline}`}>
                 <p>{light(searchValue, item.title)}</p>
             </Typography>
-            <Typography variant="body2" className={classes.description}>
+            <Typography variant="body2" className={`${classes.description} ${styles.description}`}>
                 {light(searchValue, summarySliced)}...
-                {/* <p>{summarySliced + '...'}</p> */}
-                {/* {summarySliced + '...'} */}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -25,31 +25,56 @@ function Search() {
 
   const classes = useStyles()
 
+    // const filterItems = React.useCallback((arr:IItem[], fltr:string) => {
+    //     dispatch(setSearchValue(fltr))
+    //     const result:IItem[] = [];
+    //     const fltrArr = fltr.split(' ')
+    //     if (fltrArr) {
+    //         for (let i = 0; i < fltrArr.length; i++) {
+    //             const element = fltrArr[i];
+    //             for (let j = 0; j < arr.length; j++) {
+    //                 const element2 = arr[j];
+    //                 if(element2.title.toUpperCase().includes(element.toUpperCase()) && !result.includes(element2) && element.trim()) {
+    //                     result.push(element2)
+    //                 } else if(element2.summary.toUpperCase().includes(element.toUpperCase()) && !result.includes(element2) && element.trim()) {
+    //                     result.push(element2)
+    //                 }
+    //             }
+    //         }
+    //         dispatch(setFilteredItems(result))
+    //     } else {
+    //         dispatch(setFilteredItems(arr))
+    //     }
+    // },[]);
+
     const filterItems = React.useCallback((arr:IItem[], fltr:string) => {
-        dispatch(setSearchValue(fltr))
-        const result:IItem[] = [];
-        const fltrArr = fltr.split(' ')
-        if (fltrArr.length) {
-            for (let i = 0; i < fltrArr.length; i++) {
-                const element = fltrArr[i];
+      dispatch(setSearchValue(fltr))
+      const result:IItem[] = [];
+      const fltrArr = fltr.split(' ')
+      if (fltrArr.length && !!fltrArr[0]) {
+          for (let i = 0; i < fltrArr.length; i++) {
+              const element = fltrArr[i];
+              if (!!element) {
                 for (let j = 0; j < arr.length; j++) {
-                    const element2 = arr[j];
-                    if(element2.title.toLowerCase().includes(element.toLowerCase()) && !result.includes(element2)) {
-                        result.push(element2)
-                    } else if(element2.summary.toLowerCase().includes(element.toLowerCase()) && !result.includes(element2)) {
-                        result.push(element2)
-                    }
-                }
-            }
-            dispatch(setFilteredItems(result))
-        } else {
-            dispatch(setFilteredItems(arr))
-        }
-    },[]);
+                  const element2 = arr[j];
+                  if(element2.title.toUpperCase().includes(element.toUpperCase()) && !result.includes(element2)) {
+                      result.push(element2)
+                  } else if(element2.summary.toUpperCase().includes(element.toUpperCase()) && !result.includes(element2)) {
+                      result.push(element2)
+                  }
+              }
+              }
+              
+          }
+          dispatch(setFilteredItems(result))
+      } else {
+          dispatch(setFilteredItems(arr))
+      }
+  },[dispatch]);
 
   const onFilterChange = React.useCallback((e:any) => {
       filterItems(items, e.target.value);
-  }, []);
+  }, [filterItems, items]);
 
   return (
     <div className={styles.wrapper}>
