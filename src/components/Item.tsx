@@ -55,18 +55,44 @@ function Item({item}: ItemProps) {
   const summarySliced = item.summary.slice(0, 100)
   const classes = useStyles();
 
+  // const light = React.useCallback((filter: string, str:string) => {
+  //   const parts = str.split(new RegExp(`(${filter})`, "gi"));
+  //   return parts.map((part, index) => (
+  //     <React.Fragment key={index}>
+  //     {part.toLowerCase() === filter.toLowerCase() ? (
+  //       <span style={{ backgroundColor: "yellow" }}>{part}</span>
+  //     ) : (
+  //       part
+  //     )}
+  //   </React.Fragment>
+  //   ))
+  // },[searchValue])
+
   const light = React.useCallback((filter: string, str:string) => {
-    const parts = str.split(new RegExp(`(${filter})`, "gi"));
-    return parts.map((part, index) => (
+    const arr = filter?.split(' ')
+    console.log('STARTED arr', arr)
+    arr?.forEach(el => {
+      console.log('el', el)
+      console.log('str', str)
+      console.log(str.toUpperCase().includes(el.toUpperCase()))
+      if (str.toUpperCase().includes(el.toUpperCase())) {
+        const parts = str.split(new RegExp(`(${el})`, "gi"));
+        console.log('parts', parts)
+      return parts.map((part, index) => (
       <React.Fragment key={index}>
-      {part.toLowerCase() === filter.toLowerCase() ? (
+      {part.toUpperCase() === el.toUpperCase() ? (
         <span style={{ backgroundColor: "yellow" }}>{part}</span>
       ) : (
         part
       )}
     </React.Fragment>
     ))
+      } return str
+    }) 
+    // return str
   },[searchValue])
+
+  // console.log(light('nasa said hello', 'nasa llorem ipsum maybe said'))
 
   const onClickLink = () => {
     dispatch(setItemId(item.id))

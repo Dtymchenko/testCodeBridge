@@ -3,7 +3,7 @@ import { IItem } from "../../interface";
 
 export interface initialState {
   items: IItem[],
-  filteredItems: {title: IItem[], text: IItem[]},
+  filteredItems: IItem[],
   searchValue: string,
   isLoading: boolean,
   itemId: number
@@ -11,7 +11,7 @@ export interface initialState {
 
 const initialState:initialState = {
   items: [],
-  filteredItems: {title: [], text: []},
+  filteredItems: [],
   searchValue: "",
   isLoading: true,
   itemId: 0,
@@ -23,6 +23,7 @@ export const mainSlice = createSlice({
   reducers: {
     setItems: (state, action) => {
       state.items = action.payload;
+      state.filteredItems = action.payload;
     },
     setFilteredItems: (state, action) => {
       state.filteredItems = action.payload;
