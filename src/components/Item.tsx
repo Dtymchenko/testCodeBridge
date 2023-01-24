@@ -6,6 +6,10 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { IItem } from './interface';
 import { bottomNavigationActionClasses } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { setItemId } from './redux/slices/mainSlice';
+import { RootState } from './redux/store';
 
 const useStyles = makeStyles({
   root: {
@@ -25,14 +29,14 @@ const useStyles = makeStyles({
     height: '44%',
     minHeight: '100px',
     color: '#363636',
+    overflow: 'hidden',
   },
-  decription: {
+  description: {
     height: '32%',
     fontSize: '16px',
     lineHeight: '150%',
     color: '#363636',
-  },
-  
+},
   footer: {
     fontWeight: 700,
     fontSize: '16px',
@@ -46,10 +50,31 @@ interface ItemProps {
 }
 
 function Item({item}: ItemProps) {
+  const dispatch = useDispatch()
+  const searchValue = useSelector((state:RootState) => state.main.searchValue);
+  const summarySliced = item.summary.slice(0, 100)
   const classes = useStyles();
 
+  const light = React.useCallback((filter: string, str:string) => {
+    const parts = str.split(new RegExp(`(${filter})`, "gi"));
+    return parts.map((part, index) => (
+      <React.Fragment key={index}>
+      {part.toLowerCase() === filter.toLowerCase() ? (
+        <span style={{ backgroundColor: "yellow" }}>{part}</span>
+      ) : (
+        part
+      )}
+    </React.Fragment>
+    ))
+  },[searchValue])
+
+  const onClickLink = () => {
+    dispatch(setItemId(item.id))
+  }
+
   return (
-    <Card className={classes.root}>
+    <Link to={'/detail'} onClick={onClickLink}>
+      <Card className={classes.root}>
       <CardActionArea className={classes.content}>
         <CardMedia
           className={classes.media}
@@ -70,10 +95,12 @@ function Item({item}: ItemProps) {
                 </>
               </Typography>
             <Typography gutterBottom variant="h5" component="h2" className={classes.headline}>
-                {item.title}
+                <p>{light(searchValue, item.title)}</p>
             </Typography>
-            <Typography variant="body2" className={classes.decription} component="p">
-                {item.summary.slice(0, 100) + '...'}
+            <Typography variant="body2" className={classes.description}>
+                {light(searchValue, summarySliced)}...
+                {/* <p>{summarySliced + '...'}</p> */}
+                {/* {summarySliced + '...'} */}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -82,6 +109,8 @@ function Item({item}: ItemProps) {
         <Button className={styles.btn}><ArrowForwardIcon/></Button>
       </CardActions>
     </Card>
+    </Link>
+    
   );
 }
 

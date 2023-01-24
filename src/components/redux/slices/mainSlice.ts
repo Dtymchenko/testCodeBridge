@@ -3,14 +3,18 @@ import { IItem } from "../../interface";
 
 export interface initialState {
   items: IItem[],
+  filteredItems: {title: IItem[], text: IItem[]},
   searchValue: string,
   isLoading: boolean,
+  itemId: number
 }
 
 const initialState:initialState = {
   items: [],
+  filteredItems: {title: [], text: []},
   searchValue: "",
   isLoading: true,
+  itemId: 0,
 };
 
 export const mainSlice = createSlice({
@@ -19,6 +23,9 @@ export const mainSlice = createSlice({
   reducers: {
     setItems: (state, action) => {
       state.items = action.payload;
+    },
+    setFilteredItems: (state, action) => {
+      state.filteredItems = action.payload;
     },
     setSearchValue: (state, action) => {
       state.searchValue = action.payload;
@@ -29,15 +36,20 @@ export const mainSlice = createSlice({
     setIsLoadingFalse: (state) => {
       state.isLoading = false;
     },
+    setItemId: (state, action) => {
+      state.itemId = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
 export const {
   setItems,
+  setFilteredItems,
   setIsLoadingTrue,
   setIsLoadingFalse,
   setSearchValue,
+  setItemId,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
