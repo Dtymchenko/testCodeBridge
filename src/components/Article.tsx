@@ -14,57 +14,27 @@ function Article() {
     const dispatch = useDispatch()
     // const loading = useSelector((state:RootState) => state.main.isLoading)
     const params = useParams()
-    const [item, setItem] = React.useState<IItem>({
-      id: 0,
-      title: "",
-      url: "",
-      imageUrl: "",
-      newsSite: "",
-      summary: "",
-      publishedAt: "",
-      updatedAt: "",
-      featured: false,
-      launches: [],
-      events: []
-    })   
+    const [item, setItem] = React.useState<IItem>()   
 
-    // React.useEffect(() => {
-    //     dispatch(setIsLoadingTrue())
-    //     const getDetail = async () => {
-    //         try {
-    //         const response = await axios.get(`${API_ADDRESS}/${params.id}`)
-    //         console.log("response data", response.data)
-    //         setItem(response.data)
-    //       }   catch (error:any) {
-    //         alert(error.message)
-    //         console.log(error.message)
-    //     }    finally {
-    //       dispatch(setIsLoadingFalse())
-    //       }
-    //     }
-    //     getDetail();
-    //   }, []) // [params.id]
+    React.useEffect(() => {
+        dispatch(setIsLoadingTrue())
+        const getDetail = async () => {
+            try {
+            const response = await axios.get(`${API_ADDRESS}/${params.id}`)
+            console.log("params.id", params.id)
+            console.log("response data", response.data)
+            setItem(response.data)
+          }   catch (error:any) {
+            alert(error.message)
+            console.log(error.message)
+        }    finally {
+          dispatch(setIsLoadingFalse())
+          }
+        }
+        getDetail();
+      }, []) // [params.id]
 
       console.log("item", item)
-
-      React.useCallback(() => {
-        setItem({
-          id:1230,
-          title: "Title",
-          url: "Here is URL",
-          imageUrl: "",
-          newsSite: "",
-          summary: "",
-          publishedAt: "",
-          updatedAt: "",
-          featured: false,
-          launches: [],
-          events: []
-        })
-      }, [])
-
-      console.log("item", item)
-      
 
     return (
             <div className={styles.wrapper}
