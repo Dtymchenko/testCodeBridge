@@ -7,22 +7,21 @@ import { API_ADDRESS } from '../API/API';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoadingFalse, setIsLoadingTrue } from './redux/slices/mainSlice';
 import { RootState } from './redux/store';
+import Loader from './Loader/Loader';
 
 
 function Article() {
 
     const dispatch = useDispatch()
-    // const loading = useSelector((state:RootState) => state.main.isLoading)
+    const loading = useSelector((state:RootState) => state.main.isLoading)
     const params = useParams()
     const [item, setItem] = React.useState<IItem>()   
 
     React.useEffect(() => {
-        dispatch(setIsLoadingTrue())
         const getDetail = async () => {
             try {
+              dispatch(setIsLoadingTrue())
             const response = await axios.get(`${API_ADDRESS}/${params.id}`)
-            console.log("params.id", params.id)
-            console.log("response data", response.data)
             setItem(response.data)
           }   catch (error:any) {
             alert(error.message)
@@ -32,21 +31,20 @@ function Article() {
           }
         }
         getDetail();
-      }, []) // [params.id]
-
-      console.log("item", item)
+      }, [params.id])
 
     return (
+      loading ? <Loader/> :
             <div className={styles.wrapper}
-            // style={{ background: `url(${item?.imageUrl})`,
-            // backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover', padding: '150px 75px 0px' }}
+            style={{ backgroundImage: `url(${item?.imageUrl})`,
+            backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover', padding: '150px 75px 0px' }}
             >
             <article className={styles.article}>
                 <h1>
-                {/* {item?.title} */}
+                {item?.title}
                 </h1>
                 <div className={styles.text}>
-                    {/* <p>{item?.summary}</p> */}
+                    <p>{item?.summary}</p>
                     {/* Below you can see more text to check CSS, if you want
                     {items.map(el => (<p>{item.summary}</p>))} */}
                 </div>
