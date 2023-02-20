@@ -75,15 +75,8 @@ function Item({item}: ItemProps) {
     return str;
   },[]);
 
-
-  
-
-  const onClickLink = () => {
-    dispatch(setItemId(item.id))
-  }
-
   return (
-    <Link to={'/detail'} onClick={onClickLink}>
+    <Link to={`/articles/${item.id}`}>
       <Card className={classes.root}>
       <CardActionArea className={classes.content}>
         <CardMedia

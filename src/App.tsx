@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Route, Routes } from "react-router-dom";
 import './App.scss';
 import {Box} from '@material-ui/core'
+import Loader from './components/Loader/Loader';
 import Main from './pages/Main'
 import NotFound from './pages/NotFound';
 import {IItem} from './components/interface'
@@ -13,6 +14,7 @@ import {
   setIsLoadingFalse,
 } from "./components/redux/slices/mainSlice";
 import Detail from './pages/Detail';
+import { API_ADDRESS } from './API/API';
 
 
 
@@ -24,7 +26,8 @@ function App() {
 React.useEffect(() => {
   const getData = async () => {
     try {
-      const response = await axios.get<IItem[]>('https://api.spaceflightnewsapi.net/v3/articles')
+      const response = await axios.get(API_ADDRESS)
+      console.log(response.data)
       dispatch(setItems(response.data))
     }   catch (error:any) {
       alert(error.message)
@@ -34,16 +37,16 @@ React.useEffect(() => {
     }
   }
   getData();
-}, [loading])
+}, [])
 
   return (
     <Box className='wrapper'>
       <Routes>
         <Route index element={
-        loading? <div className='loader'>Loading...</div> : <Main/>
+        loading? <Loader /> : <Main/>
         } />
         <Route
-          path="/detail"
+          path="/articles/:id"
           element={
             <Detail/>
           }
